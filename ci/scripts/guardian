@@ -63,7 +63,11 @@ if [ -z "${NO_GO_VET:-}" ]; then
   go vet -mod vendor ./...
 fi
 
-cmd="ginkgo -mod vendor -tags daemon -r -p --keepGoing --nodes=${GINKGO_NODES:-8} --failOnPending --randomizeSuites --randomizeAllSpecs -debug"
+go get github.com/onsi/ginkgo/ginkgo@049d8501c2adbe69f641bb838202a4b278e6c6d2
+go mod vendor
+ginkgo version
+
+cmd="ginkgo --mod vendor -tags daemon -p --keep-going --nodes=${GINKGO_NODES:-8} --fail-on-pending --randomize-suites --randomize-all cmd/dadoo"
 if [ -n "${RACE_DETECTION:-}" ]; then
   cmd="$cmd --race"
 fi
