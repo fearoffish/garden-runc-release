@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source /var/vcap/jobs/garden/bin/containerd_utils
+
+start_containerd

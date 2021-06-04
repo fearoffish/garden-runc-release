@@ -26,12 +26,6 @@ log() {
 start_containerd() {
   log "starting containerd"
 
-  if pidof containerd; then
-    echo "containerd already running"
-    return
-  fi
-
-
   containerd_config_filepath="$GARDEN_CONFIG_DIR/containerd.toml"
   exec_command="exec"
   <% if p("garden.experimental_rootless_mode") -%>

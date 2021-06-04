@@ -1,5 +1,9 @@
 [Unit]
 Description=garden-runc container runtime
+<% if p("garden.containerd_mode") -%>
+Wants=containerd.service
+After=containerd.service
+<% end %>
 
 [Service]
 ExecStart=/var/vcap/jobs/garden/bin/garden_start

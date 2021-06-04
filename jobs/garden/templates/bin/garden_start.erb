@@ -39,11 +39,16 @@ log "configuring xfs: done"
 <% end %>
 
 <% if p("garden.containerd_mode") -%>
-source /var/vcap/jobs/garden/bin/containerd_utils
-
-log "containerd starting"
-start_containerd
-log "containerd started"
+if [ -z "${IS_RUNNING_SYSTEMD}" ]; then
+  if pidof containerd; then
+    echo "containerd already running"
+  else
+    source /var/vcap/jobs/garden/bin/containerd_utils
+    log "containerd starting"
+    start_containerd
+    log "containerd started"
+  fi
+fi
 <% end %>
 
 exec 1> >( tee -a $LOG_DIR/garden.stdout.log | logger -p user.info -t vcap.garden ) \

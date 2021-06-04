@@ -62,9 +62,11 @@ function stop_guardian() {
 stop_guardian
 
 <% if p("garden.containerd_mode") -%>
-source /var/vcap/jobs/garden/bin/containerd_utils
+if [ -z "${IS_RUNNING_SYSTEMD}" ]; then
+  source /var/vcap/jobs/garden/bin/containerd_utils
 
-log "containerd stopping"
-stop_containerd
-log "containerd stopped"
+  log "containerd stopping"
+  stop_containerd
+  log "containerd stopped"
+fi
 <% end %>
